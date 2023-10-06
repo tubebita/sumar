@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprende a sumar</title>
+    <link rel="stylesheet" href="stilo.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="side">
+            <p>Lado A</p>
+            <p id="ladoA"></p>
+        </div>
+        <div class="side">
+            <img src="suma.png" alt="Suma" class="suma-image" />
+        </div>
+        <div class="side">
+            <p>Lado B</p>
+            <p id="ladoB"></p>
+        </div>
+    </div>
+    <div class="result">
+        <label for="suma">Adivina la suma:</label>
+        <input type="number" id="suma" />
+        <button onclick="verificarSuma()">Verificar</button>
+        <button onclick="regenerarNumeros()">Regenerar</button>
+    </div>
+
+    <div id="emoticon" class="result"></div>
+
+    <script>
+        function generarNumeroAleatorio() {
+            return Math.floor(Math.random() * 6) + 1; // Genera un número aleatorio del 1 al 6
+        }
+
+        // Variables para los números aleatorios
+        let numeroA = 0;
+        let numeroB = 0;
+
+        function actualizarNumeros() {
+            // Genera números aleatorios
+            numeroA = generarNumeroAleatorio();
+            numeroB = generarNumeroAleatorio();
+
+            // Obtén las referencias a los elementos p
+            const ladoA = document.getElementById("ladoA");
+            const ladoB = document.getElementById("ladoB");
+
+            // Define la ruta de la imagen que deseas mostrar
+            const imagenB = "girasol.png"; // Cambia la ruta de la imagen para el lado B
+
+            // Establece el contenido de los elementos p como múltiples imágenes
+            ladoA.innerHTML = ""; // Limpia el contenido anterior
+            ladoB.innerHTML = ""; // Limpia el contenido anterior
+
+            for (let i = 0; i < numeroA; i++) {
+                ladoA.innerHTML += `<img src="${imagenB}" alt="Lado A" />`;
+            }
+
+            for (let i = 0; i < numeroB; i++) {
+                ladoB.innerHTML += `<img src="${imagenB}" alt="Lado B" />`;
+            }
+        }
+
+        function verificarSuma() {
+            const sumaUsuario = parseInt(document.getElementById("suma").value);
+
+            if (numeroA + numeroB === sumaUsuario) {
+                document.getElementById("emoticon").textContent = "😃 ¡Correcto! La suma es " + (numeroA + numeroB);
+            } else {
+                document.getElementById("emoticon").textContent = "😞 Incorrecto. La suma es " + (numeroA + numeroB);
+            }
+        }
+
+        function regenerarNumeros() {
+            actualizarNumeros(); // Llama a esta función para generar nuevos números aleatorios
+            document.getElementById("suma").value = ""; // Limpiar el campo de entrada
+            document.getElementById("emoticon").textContent = ""; // Limpiar el emoticono
+        }
+
+        actualizarNumeros();
+    </script>
+</body>
+
+</html>
